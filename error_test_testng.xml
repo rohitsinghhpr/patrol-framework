@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" thread-count="3">
+	<listeners>
+		<listener class-name="Patrol.utilities.AllureListeners"></listener>
+	</listeners>
+	<test name="Test1">
+		<classes>
+			<class name="Patrol.tests.TribunalCourtCasesTest" />
+		</classes>
+	</test>
+</suite> <!--
+Suite -->
