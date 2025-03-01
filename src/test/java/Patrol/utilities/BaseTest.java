@@ -59,7 +59,7 @@ public class BaseTest {
         return tdriver.get();
     }
 
-    @BeforeMethod
+    @BeforeMethod()
     public void launchBrowser() {
     	if (driver == null) {
     		initializeDriver();

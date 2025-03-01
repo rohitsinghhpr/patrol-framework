@@ -273,14 +273,14 @@ public class DCTC extends BaseTest2 {
 		addCasePage.districtCourtByCase(state, district, form, caseType);
 	}
 
-	@Test(priority = 35, enabled = true, dataProvider = "district_court_by_case_West_Bengal", dataProviderClass = DistrictCourtDP.class)
+	@Test(priority = 35, enabled = false, dataProvider = "district_court_by_case_West_Bengal", dataProviderClass = DistrictCourtDP.class)
 	public void district_court_by_case_West_Bengal(String state, String district, String form, String caseType)
 			throws IOException {
 		addCasePage.clickOnTab("By Case");
 		addCasePage.districtCourtByCase(state, district, form, caseType);
 	}
 	
-	@Test(priority = 36, enabled = false, dataProvider = "district_court_party_name", dataProviderClass = DistrictCourtDP.class)
+	@Test(priority = 36, enabled = true, dataProvider = "district_court_party_name", dataProviderClass = DistrictCourtDP.class)
 	public void district_court_party_name(String state, String district, String form, String caseType)
 			throws IOException {
 		addCasePage.clickOnTab("By Party Name");

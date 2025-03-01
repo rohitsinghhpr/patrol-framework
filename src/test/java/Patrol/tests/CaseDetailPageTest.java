@@ -29,33 +29,33 @@ public class CaseDetailPageTest extends BaseTest2 {
 		casePage = new CasesPage(driver);
 	}
 	
-	@Test(priority = 1, enabled = false)
+	@Test(priority = 1, enabled = true)
 	public void allCasesTest() {
 		casePage.checkLinkAllPages();
 	}
 	
-	@Test(priority = 2, enabled = false)
+	@Test(priority = 2, enabled = true)
 	public void supremeCourtCasesTest() {
 		casePage.clickOnFilter();
 		casePage.clickOnSupremeCourt();
 		casePage.checkLinkAllPages();
 	}
 	
-	@Test(priority = 3, enabled = false)
+	@Test(priority = 3, enabled = true)
 	public void highCourtCasesTest() {
 		casePage.clickOnFilter();
 		casePage.clickOnHighCourt();
 		casePage.checkLinkAllPages();
 	}
 	
-	@Test(priority = 4, enabled = false)
+	@Test(priority = 4, enabled = true)
 	public void districtCourtCasesTest() {
 		casePage.clickOnFilter();
 		casePage.clickOnDistrictCourt();
 		casePage.checkLinkAllPages();
 	}
 	
-	@Test(priority = 5, enabled = false)
+	@Test(priority = 5, enabled = true)
 	public void tribunalsCourtCasesTest() {
 		casePage.clickOnFilter();
 		casePage.clickOnTribunalsCourt();
