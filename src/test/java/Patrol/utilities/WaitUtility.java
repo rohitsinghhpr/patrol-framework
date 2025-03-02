@@ -40,6 +40,17 @@ public class WaitUtility {
         }
     } 
 
+    public static boolean waitForElementToBeVisible(WebDriver driver, WebElement element,int seconds) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            System.err.println("Element not visible within the timeout: " + e.getMessage());
+            return false;
+        }
+    }
+    
     // Wait for a WebElement to be clickable
     public static boolean waitForElementToBeClickable(WebDriver driver, WebElement element) {
         try {

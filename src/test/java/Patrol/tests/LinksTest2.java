@@ -4,20 +4,16 @@ import java.io.IOException;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import Patrol.pages.ActiveFirmPage;
 import Patrol.pages.DashBoardPage;
 import Patrol.pages.LoginPage;
-import Patrol.utilities.AllureListeners2;
 import Patrol.utilities.BaseTest2;
 import Patrol.utilities.CommonUtility;
 import Patrol.utilities.ConfingDataProvider;
-import Patrol.utilities.ScreenShotsUtility;
 import Patrol.utilities.WaitUtility;
 
-@Listeners(AllureListeners2.class)
 public class LinksTest2 extends BaseTest2 {
 
 	@BeforeClass()
@@ -42,7 +38,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Reports");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Report","Header Miss Match");
 	}
 
@@ -51,7 +46,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "My Cause List");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Causelist","Header Miss Match");
 	}
 
@@ -60,7 +54,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Invoice");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Invoice","Header Miss Match");
 	}
 
@@ -69,8 +62,7 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Order Tracker");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
-		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Order Tracker","Header Miss Match");
+		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Order Trackers","Header Miss Match");
 	}
 
 	@Test(priority = 5)
@@ -78,8 +70,7 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Notification");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
-		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Notification","Header Miss Match");
+		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Notifications","Header Miss Match");
 	}
 
 	@Test(priority = 6)
@@ -87,7 +78,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Company");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Active Firms","Header Miss Match");
 	}
 	
@@ -97,7 +87,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Cases");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Cases","Header Miss Match");
 	}
 	
@@ -107,7 +96,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Matters");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Matter","Header Miss Match");
 	}
 	
@@ -117,7 +105,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Calendar");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Calendar","Header Miss Match");
 	}
 	
@@ -127,7 +114,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Tasks");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Tasks","Header Miss Match");
 	}
 	
@@ -137,7 +123,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Documents");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Document","Header Miss Match");
 	}
 	
@@ -147,7 +132,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Contacts");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Contacts","Header Miss Match");
 	}
 	
@@ -157,7 +141,6 @@ public class LinksTest2 extends BaseTest2 {
 		CommonUtility.clickOnLink(driver, "Alerts");
 		WaitUtility.waitForSeconds(5);
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
-		ScreenShotsUtility.addScreenshotToReport(driver);
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Appeal Alert","Header Miss Match");
 	}
 }

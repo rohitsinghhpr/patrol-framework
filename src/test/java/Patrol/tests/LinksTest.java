@@ -4,17 +4,19 @@ import java.io.IOException;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import Patrol.pages.ActiveFirmPage;
 import Patrol.pages.DashBoardPage;
 import Patrol.pages.LoginPage;
+import Patrol.utilities.AllureListeners;
 import Patrol.utilities.BaseTest;
 import Patrol.utilities.CommonUtility;
 import Patrol.utilities.ConfingDataProvider;
 import Patrol.utilities.ScreenShotsUtility;
 import Patrol.utilities.WaitUtility;
-
+@Listeners(AllureListeners.class)
 public class LinksTest extends BaseTest {
 
 	@BeforeMethod

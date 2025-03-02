@@ -14,14 +14,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-// To Take SceenShots Manually
 public class ScreenShotsUtility {
 
-	@Attachment(value = "Screenshot - {0}", type = "image/png")
-	private static byte[] captureScreenshot(WebDriver driver, String screenshotName) {
+	@Attachment(value = "Screenshot", type = "image/png")
+	private static byte[] captureScreenshot(WebDriver driver) {
 		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 	}
-
+	
 	private static void captureScreenshotToReport(WebDriver driver, String screenshotName) {
 		byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 		Allure.addAttachment(screenshotName, new ByteArrayInputStream(screenshotBytes));
@@ -29,8 +28,7 @@ public class ScreenShotsUtility {
 
 	// Static method to attach screenshot to allure report
 	public static void addScreenshotToReport(WebDriver driver) {
-		String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
-		captureScreenshot(driver, timestamp);
+		captureScreenshot(driver);
 	}
 
 	// Static method to attach screenshot with custum name to allure report

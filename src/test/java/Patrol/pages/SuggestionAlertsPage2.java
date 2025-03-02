@@ -3,7 +3,6 @@ package Patrol.pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,25 +15,28 @@ public class SuggestionAlertsPage2 extends BasePage {
 	public SuggestionAlertsPage2(WebDriver driver) {
 		super(driver);
 	}
-	
+
 	@FindBy(xpath = "//a[contains(@class,'navbar-brand')]//img")
 	WebElement logo;
-	
+
 	@FindBy(xpath = "//table[contains(@class,\"table\")]")
 	WebElement table;
+	
+	@FindBy(xpath="//table[contains(@class,'table')]//tbody//tr")
+	List<WebElement> table_rows;
 
 	@FindBy(xpath = "//span[text()='Alerts']")
 	WebElement alertsLink;
 
 	@FindBy(xpath = "//a[normalize-space()='Suggestion Alert']")
 	WebElement suggestionAlert;
-	
+
 	@FindBy(xpath = "//div[normalize-space(text())='High Court']")
 	WebElement highcourtTab;
 
 	@FindBy(xpath = "//div[contains(text(),'District Court')]")
 	WebElement districtCourtTab;
-	
+
 	@FindBy(xpath = "//div[normalize-space(text())='Supreme Court']")
 	WebElement supremecourtTab;
 
@@ -43,10 +45,14 @@ public class SuggestionAlertsPage2 extends BasePage {
 
 	@FindBy(css = "ul.pagination>li:last-child")
 	WebElement nextButton;
-	
+
 	@FindBy(css = "ul.pagination>li:nth-last-child(2)")
 	WebElement scecondLastPage;
 	
+	public boolean isLogoDisplayed() {
+		return WaitUtility.waitForElementToBeVisible(driver, logo);
+	}
+
 	public void clickOnSuggestionAlert() {
 		suggestionAlert.click();
 	}
@@ -58,11 +64,11 @@ public class SuggestionAlertsPage2 extends BasePage {
 	public void clickOnSupremeCourtTab() {
 		supremecourtTab.click();
 	}
-	
+
 	public void clickOnHighCourtTab() {
 		highcourtTab.click();
 	}
-	
+
 	public void clickOnTribunalCourtTab() {
 		tribunalsCourtTab.click();
 	}
@@ -71,106 +77,141 @@ public class SuggestionAlertsPage2 extends BasePage {
 		districtCourtTab.click();
 	}
 
-	public boolean isTagFound() {
-		return false;
+	public boolean isTableVisible() {
+		return WaitUtility.waitForElementToBeVisible(driver, table);
 	}
 	
-	public void clickOnTag(String tagName) {
-		if (table == null) {
-			throw new IllegalStateException("Table element not initialized.");
-		}
+	public int getTableRowsCount() {
+		return table_rows.size();
+	}
+
+	public boolean isTagFound(String tagName) {
 		List<WebElement> rows = table.findElements(By.xpath("//tbody//tr"));
 		boolean found = false;
 		for (int i = 0; i < rows.size(); i++) {
-			try {
-				WebElement tagCell = rows.get(i).findElement(By.xpath(".//td[1]//a"));
-				BrowserUtility.scrollIntoView(driver, tagCell);
-				if (tagCell.getText().trim().equalsIgnoreCase(tagName)) {
-					tagCell.click();
-					found = true;
-					break;
-				}
-			} catch (NoSuchElementException e) {
-				WebElement tagCell = rows.get(i).findElement(By.xpath(".//td[1]"));
-				BrowserUtility.scrollIntoView(driver, tagCell);
-				if (tagCell.getText().trim().equalsIgnoreCase(tagName)) {
-					System.out.println(tagName + " => found but tag not executable");
-					found = true;
-				} else {
-					continue;
-				}
+			WebElement tagCell = rows.get(i).findElement(By.xpath(".//td[1]//a"));
+			BrowserUtility.scrollIntoView(driver, tagCell);
+			if (tagCell.getText().trim().equalsIgnoreCase(tagName)) {
+				found = true;
+				break;
 			}
 		}
-		if (!found) {
-			System.out.println(tagName + " => Tag Not Found");
+		return found;
+	}
+
+	public void clickOnTag(String tagName) {
+		WaitUtility.waitForElementToBeVisible(driver,table);
+		List<WebElement> rows = table.findElements(By.xpath("//tbody//tr"));
+		for (int i = 0; i < rows.size(); i++) {
+			WebElement tagCell = rows.get(i).findElement(By.xpath(".//td[1]//a"));
+			BrowserUtility.scrollIntoView(driver, tagCell,true);
+			if (tagCell.getText().trim().equalsIgnoreCase(tagName)) {
+				tagCell.click();
+				break;
+			}
+		}
+	}
+
+	public boolean isCaseNumberFound(String caseNumberToFind) {
+		WaitUtility.waitForElementToBeVisible(driver,table);
+		List<WebElement> rows = table.findElements(By.tagName("tr"));
+		boolean found = false;
+		for (int i = 1; i < rows.size(); i++) { // Skip the header row
+			List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+			if (cells.size() > 1 && cells.get(1).getText().equals(caseNumberToFind)) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+	
+	public boolean isLinkFoundInRow(WebElement row) {
+		WaitUtility.waitForElementToBeVisible(driver,table);
+		WebElement caseLink = row.findElement(By.xpath(".//td[3]//a[not(@class='addTag')]"));
+		try {
+			return WaitUtility.waitForElementToBeVisible(driver, caseLink);
+		} catch (Exception ex) {
+			WaitUtility.waitForSeconds(5);
+			BrowserUtility.scrollIntoView(driver, caseLink, true);
+			return WaitUtility.waitForElementToBeVisible(driver, caseLink);
 		}
 	}
 	
-	public boolean isTableVisible() {
-		return false;
+	public void clickOnLinkInRow(String rowcount) {
+		String xpath = ".//tbody//tr[1]";
+		xpath = xpath.replace("1",rowcount);
+		WaitUtility.waitForElementToBeVisible(driver,table);
+		WebElement row = table.findElement(By.xpath(xpath));
+		WaitUtility.waitForElementToBeVisible(driver, row);
+		WebElement caseLink = row.findElement(By.xpath(".//td[3]//a[not(@class='addTag')]"));
+		WaitUtility.waitForElementToBeVisible(driver,caseLink);
+		BrowserUtility.scrollIntoView(driver,row,true);
+		BrowserUtility.mouseToElement(driver, caseLink);
+        WaitUtility.waitForElementToBeClickable(driver, caseLink);
+        caseLink.click();
+	}
+
+	public boolean isPattrnFoundInRow(String rowcount,String pattern) {
+		String xpath = ".//tbody//tr[1]";
+		xpath = xpath.replace("1",rowcount);
+		WaitUtility.waitForElementToBeVisible(driver,table);
+		WebElement row = table.findElement(By.xpath(xpath));
+		WaitUtility.waitForElementToBeVisible(driver, row);
+		BrowserUtility.scrollIntoView(driver,row,true);
+		String caseNumber = row.findElement(By.xpath(".//td[2]")).getText();
+		if(caseNumber.contains(pattern)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
-	public int getRowCount() {
-		int row_cout = 0;
-		return row_cout;
+	public String getPattrnFoundInRow(String rowcount,String pattern) {
+		String xpath = ".//tbody//tr[1]";
+		xpath = xpath.replace("1",rowcount);
+		WaitUtility.waitForElementToBeVisible(driver,table);
+		WebElement row = table.findElement(By.xpath(xpath));
+		WaitUtility.waitForElementToBeVisible(driver, row);
+		BrowserUtility.scrollIntoView(driver,row,true);
+		String caseNumber = row.findElement(By.xpath(".//td[2]")).getText();
+		return caseNumber;
 	}
-	
-	public boolean isCaseNumberFound() {
-		return false;
-	}
-	
-	public boolean isLinkFoundInRow() {
-		return false;
-	}
-	
-	public boolean isPattrnFoundInRow() {
-		return false;
-	}
-	
-	public String getLinkOfRow(){
-		return "link";
-	}
-	
-	public void clickOnLink(String link) {}
-	
-	public boolean isCaseDetailsOpened() {
-		return false;
-	}
-	
+
 	public boolean isNextButtonDisabled() {
 		WaitUtility.waitForElementToBeVisible(driver, nextButton);
-		String buttonClass = nextButton.getAttribute("class");  
-		if (buttonClass.contains("disabled")) {  
-		   return true;  
-		} else {  
-		   return false;
+		String buttonClass = nextButton.getAttribute("class");
+		if (buttonClass.contains("disabled")) {
+			return true;
+		} else {
+			return false;
 		}
 	}
+
 	public void clickOnNextButton() {
-		BrowserUtility.click(driver, nextButton);
+		nextButton.click();
 	}
-	
-	public boolean isPreButtonEnabled() {return false;}
-	public void clickOnPreButton() {}
-	
+
+	public boolean isPreButtonEnabled() {
+		return false;
+	}
+
+	public void clickOnPreButton() {
+	}
+
 	public int getSecondLastPageNumber() {
 		return Integer.parseInt(scecondLastPage.getText());
 	}
-	
-	public boolean isLogoDisplayed() {
-		return WaitUtility.waitForElementToBeVisible(driver,logo);
-	}
-	
-	public void goToPreviousPage(){
+
+	public void goToPreviousPage() {
 		driver.navigate().back();
 	}
-	
+
 	public void clickOnPage(String page) {
-		String xpath =  "//ul[contains(@class,'pagination')]//li//a[text()='page']";
+		String xpath = "//ul[contains(@class,'pagination')]//li//a[text()='page']";
 		xpath = xpath.replace("page", page);
-		WaitUtility.waitForElementToBeClickable(driver,driver.findElement(By.xpath(xpath)));
+		WaitUtility.waitForElementToBeClickable(driver, driver.findElement(By.xpath(xpath)));
 		driver.findElement(By.xpath(xpath)).click();
 	}
-	
 
 }
