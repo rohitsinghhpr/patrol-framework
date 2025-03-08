@@ -16,6 +16,15 @@ public class AllureListeners2 implements ITestListener {
 	public static String saveTextMessage(String message) {
 		return message;
 	}
+	
+	@Override
+	public void onTestSuccess(ITestResult iTR) {
+		System.out.println("i am in onTestSuccess method " + getTestMethodName(iTR));
+		WebDriver driver = BaseTest2.getDriver();
+		if (driver instanceof WebDriver) {
+			ScreenShotsUtility.addScreenshotToReport(driver,getTestMethodName(iTR));
+		}
+	}
 
 	@Override
 	public void onTestFailure(ITestResult iTR) {
@@ -29,5 +38,9 @@ public class AllureListeners2 implements ITestListener {
 	@Override
 	public void onTestSkipped(ITestResult iTR) {
 		System.out.println("i am in onTestSkipped method " + getTestMethodName(iTR));
+		WebDriver driver = BaseTest2.getDriver();
+		if (driver instanceof WebDriver) {
+			ScreenShotsUtility.addScreenshotToReport(driver,getTestMethodName(iTR));
+		}
 	}
 }

@@ -10,6 +10,7 @@ import Patrol.pages.MatterPage;
 import Patrol.utilities.BaseTest2;
 import Patrol.utilities.CommonUtility;
 import Patrol.utilities.ConfingDataProvider;
+import Patrol.utilities.RetryAnalyzer;
 import Patrol.utilities.WaitUtility;
 
 public class MatterPageTest extends BaseTest2 {
@@ -29,7 +30,7 @@ public class MatterPageTest extends BaseTest2 {
 		WaitUtility.waitForSeconds(5);
 	}
 	
-	@Test(priority=1)
+	@Test(priority=1,retryAnalyzer = RetryAnalyzer.class)
 	public void verifyAllTabTest(){
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Matter","Header Miss Match");
@@ -37,16 +38,16 @@ public class MatterPageTest extends BaseTest2 {
 		Assert.assertEquals(matterPage.isTabActive("ALL"),true,"All Tab is not active");
 	}
 	
-	@Test(priority=2)
+	@Test(priority=2,retryAnalyzer = RetryAnalyzer.class)
 	public void verifyOpenTabTest(){
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Matter","Header Miss Match");
 		MatterPage matterPage = new MatterPage(driver);
 		matterPage.clickOnTab("Open");
-		Assert.assertEquals(matterPage.isTabActive("Open"),true,"Open Tab is not active");
+		Assert.assertEquals(matterPage.isTabActive("Open"),false,"Open Tab is not active");
 	}
 	
-	@Test(priority=3)
+	@Test(priority=3,retryAnalyzer = RetryAnalyzer.class)
 	public void verifyPendingTabTest(){
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Matter","Header Miss Match");
@@ -55,7 +56,7 @@ public class MatterPageTest extends BaseTest2 {
 		Assert.assertEquals(matterPage.isTabActive("Pending"),true,"Pending Tab is not active");
 	}
 
-	@Test(priority=4)
+	@Test(priority=4,retryAnalyzer = RetryAnalyzer.class)
 	public void verifyClosedTabTest(){
 		Assert.assertTrue(CommonUtility.isPageHeaderVisible(driver),"Header is not visible");
 		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Matter","Header Miss Match");

@@ -11,11 +11,13 @@ import Patrol.pages.LoginPage;
 import Patrol.utilities.BaseTest;
 import Patrol.utilities.BrowserUtility;
 import Patrol.utilities.ConfingDataProvider;
+import Patrol.utilities.RetryAnalyzer;
+import Patrol.utilities.ScreenShotsUtility;
 import Patrol.utilities.WaitUtility;
 
 public class CasesPageTest2 extends BaseTest{
 
-	@Test(priority=1)
+	@Test(priority=1,enabled = true,retryAnalyzer = RetryAnalyzer.class)
 	public void verifyAllLinks() {
 		SoftAssert softAssert = new SoftAssert();
 		LoginPage loginPage = new LoginPage(driver);
@@ -24,7 +26,6 @@ public class CasesPageTest2 extends BaseTest{
 		loginPage.performAction();
 		ActiveFirmPage activeFirmpage = new ActiveFirmPage(driver);
 		activeFirmpage.clickOnCompany("Legitquest");
-
 		DashBoardPage dashBoardPage = new DashBoardPage(driver);
 		dashBoardPage.clickOnManageCases();
 		dashBoardPage.clickCasesLink();
@@ -50,4 +51,38 @@ public class CasesPageTest2 extends BaseTest{
 		softAssert.assertAll();
 	}
 	
+	@Test(priority=2,enabled = false,retryAnalyzer = RetryAnalyzer.class)
+	public void verifyPagination() {
+		SoftAssert softAssert = new SoftAssert();
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.setEmail(ConfingDataProvider.Email);
+		loginPage.setPassword(ConfingDataProvider.Password);
+		loginPage.performAction();
+		ActiveFirmPage activeFirmpage = new ActiveFirmPage(driver);
+		activeFirmpage.clickOnCompany("Legitquest");
+		DashBoardPage dashBoardPage = new DashBoardPage(driver);
+		dashBoardPage.clickOnManageCases();
+		dashBoardPage.clickCasesLink();
+		CasesPage2 casePage = new CasesPage2(driver);
+		int lastPageNumber = casePage.getSecondLastPageNumber();
+		for (int page = 2; page <= lastPageNumber; page++) {
+			if (casePage.isLogoDisplayed()) {
+				BrowserUtility.scrollToDown(driver);
+				WaitUtility.waitForSeconds(2);
+				casePage.clickOnPage(String.valueOf(page));
+				WaitUtility.waitForSeconds(5);
+			} else {
+				String screenshotName = "Skip Page = " + page;
+				softAssert.assertEquals(casePage.isLogoDisplayed(),true,screenshotName);
+				ScreenShotsUtility.addScreenshotToReport(driver, screenshotName);
+				casePage.goToPreviousPage();
+				page++;
+				BrowserUtility.scrollToDown(driver);
+				WaitUtility.waitForSeconds(2);
+				casePage.clickOnPage(String.valueOf(page));
+				WaitUtility.waitForSeconds(5);
+			}
+		}
+		softAssert.assertAll();
+	}
 }

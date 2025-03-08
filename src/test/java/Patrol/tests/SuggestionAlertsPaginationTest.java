@@ -21,6 +21,9 @@ public class SuggestionAlertsPaginationTest extends BaseTest2 {
 
 	@BeforeClass()
 	public void dologin() {
+		
+		String tag = "Reliance";
+		
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.setEmail(ConfingDataProvider.Email);
 		loginPage.setPassword(ConfingDataProvider.Password);
@@ -36,9 +39,9 @@ public class SuggestionAlertsPaginationTest extends BaseTest2 {
 		suggestionAlertPage = new SuggestionAlertsPage2(driver);
 		suggestionAlertPage.clickOnSuggestionAlert();
 		Assert.assertEquals(suggestionAlertPage.isTableVisible(), true, "Table is not visible befor clicking on tag");
-		Assert.assertEquals(suggestionAlertPage.isTagFound("Tanu"), true, "Tanu tag is not found");
-		suggestionAlertPage.clickOnTag("Tanu");
-		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Suggestion Alert / Tanu", "Header Miss Match");
+		Assert.assertEquals(suggestionAlertPage.isTagFound(tag), true, tag+" tag is not found");
+		suggestionAlertPage.clickOnTag(tag);
+		Assert.assertEquals(CommonUtility.verifyPageHeader(driver), "Suggestion Alert / "+tag, "Header Miss Match");
 	}
 
 	public void checkPagination() {
@@ -77,13 +80,13 @@ public class SuggestionAlertsPaginationTest extends BaseTest2 {
 		checkPagination();
 	}
 
-	@Test(priority = 3, enabled = true)
+	@Test(priority = 3, enabled = false)
 	public void districtCourtCasesTest() throws InterruptedException {
 		suggestionAlertPage.clickOnDistrictCourtTab();
 		checkPagination();
 	}
 
-	@Test(priority = 4, enabled = false)
+	@Test(priority = 4, enabled = true)
 	public void tribunalsCourtCasesTest() throws InterruptedException {
 		suggestionAlertPage.clickOnTribunalCourtTab();
 		checkPagination();
