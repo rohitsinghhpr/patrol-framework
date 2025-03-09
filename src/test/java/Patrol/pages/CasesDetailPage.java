@@ -16,7 +16,7 @@ public class CasesDetailPage extends BasePage{
 	WebElement caseDetailTab;
 	
 	public boolean isCaseDetailTabVisible() {
-		return WaitUtility.waitForElementToBeVisible(driver,caseDetailTab,5);
+		return WaitUtility.waitForElementToBeVisible(driver,caseDetailTab,10);
 	}
 	
 }

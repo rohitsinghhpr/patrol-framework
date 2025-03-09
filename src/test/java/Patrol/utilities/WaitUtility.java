@@ -27,6 +27,19 @@ public class WaitUtility {
 	        e.printStackTrace();
 	    }
 	}
+	
+	// 
+	
+	public static boolean waitForElementToBePresent(WebDriver driver,By locator) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+            return true;
+        } catch (TimeoutException e) {
+            System.err.println("Element not presence within the timeout: " + e.getMessage());
+            return false;
+        }
+    }
 
     // Wait for a WebElement to be visible
     public static boolean waitForElementToBeVisible(WebDriver driver, WebElement element) {
